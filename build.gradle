@@ -1,0 +1,41 @@
+group 'btc'
+version '1.0-SNAPSHOT-tests'
+
+apply plugin: 'groovy'
+apply plugin: 'java'
+apply plugin: 'application'
+
+sourceCompatibility = 1.8
+mainClassName = ''
+
+repositories {
+    mavenCentral()
+}
+
+task packageTests(type: Jar) {
+    from sourceSets.test.output
+}
+
+dependencies {
+    compile group: 'io.appium', name: 'java-client', version: '5.0.0-BETA9'
+    compile group: 'junit', name: 'junit', version: '4.12'
+}
+
+task installZip(dependsOn: ["clean", "packageTests", "installDist"]) << {
+    new File("build/work").mkdir()
+    new File('build/zip.sh') << 'cd build/work; zip -r upload.zip .'
+    copy{
+        from "build/install/test/lib/"
+        into "build/work/dependency-jars/"
+    }
+    copy{
+        from "build/libs/test-1.0-SNAPSHOT-tests.jar"
+        into "build/work/"
+    }
+    "chmod 755 build/zip.sh".execute().waitFor()
+    "build/zip.sh".execute().waitFor()
+    copy{
+        from "build/work/upload.zip"
+        into "build/"
+    }
+}
