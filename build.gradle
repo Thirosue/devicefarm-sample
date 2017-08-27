@@ -39,3 +39,7 @@ task installZip(dependsOn: ["clean", "packageTests", "installDist"]) << {
         into "build/"
     }
 }
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.5'
+}
