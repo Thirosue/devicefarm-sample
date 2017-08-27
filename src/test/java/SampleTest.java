@@ -17,7 +17,7 @@ import static org.junit.Assert.*;
 /**
  *
  * Simple test which demonstrates how a test can be run against Mobile Safari running on an Appium instance.
- *ß
+ *
  * The test is based on https://github.com/appium/appium/blob/master/sample-code/examples/node/safari.js
  *
  * @author Takeshi Hirosue
