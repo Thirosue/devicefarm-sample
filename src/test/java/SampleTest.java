@@ -1,18 +1,20 @@
-import io.appium.java_client.ios.IOSDriver;
+import com.codeborne.selenide.Configuration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.TakesScreenshot;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 import java.io.File;
 import java.net.URL;
 import java.util.concurrent.TimeUnit;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 /**
  *
@@ -24,7 +26,7 @@ import static org.junit.Assert.*;
  */
 public class SampleTest {
 
-    private WebDriver driver;
+    private RemoteWebDriver driver;
 
     /**
      * Instantiates the {@link #driver} instance by using DesiredCapabilities which specify the
@@ -33,14 +35,13 @@ public class SampleTest {
      */
     @Before
     public void setUp() throws Exception {
-//        DesiredCapabilities capabilities = new DesiredCapabilities();
-//        capabilities.setCapability("deviceName", "iPhone SE");
-//        capabilities.setCapability("platformName", "iOS");
-//        capabilities.setCapability("platformVersion", "10.3");
-//        capabilities.setCapability("browserName", "safari");
-        driver = new IOSDriver<WebElement>(new URL("http://127.0.0.1:4723/wd/hub"),
-                new DesiredCapabilities());
+        DesiredCapabilities capabilities = new DesiredCapabilities();
+        capabilities.setPlatform(Platform.IOS);
+        capabilities.setBrowserName(Browse.safari.name());
+        driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"),
+                capabilities);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+        Configuration.browser = driver.getClass().getName();
     }
 
 
@@ -68,15 +69,17 @@ public class SampleTest {
      */
     @Test
     public void runTest() throws Exception {
-        driver.get("http://www.stockchat.io/");
-
+        driver.get("https://www.google.co.jp/");
         Thread.sleep(1000);
-        System.out.println(driver.getTitle());
 
+        System.out.println(driver.getTitle());
+        System.out.println(driver.getPageSource());
+
+        driver.findElement(By.id("lst-ib")).sendKeys("AWS DeviceFarm");
+        driver.findElement(By.id("tsbb")).click();
         assertTrue(takeScreenshot("index"));
 
-        driver.getPageSource();
-
-        System.out.println(driver.getCurrentUrl());
+        assertEquals("AWS DeviceFarm", driver.findElement(By.id("lst-ib")).getAttribute("value"));
+        assertTrue(takeScreenshot("result"));
     }
 }

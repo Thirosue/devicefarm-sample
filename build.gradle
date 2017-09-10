@@ -19,11 +19,13 @@ task packageTests(type: Jar) {
 dependencies {
     compile group: 'io.appium', name: 'java-client', version: '5.0.0-BETA9'
     compile group: 'junit', name: 'junit', version: '4.12'
+    compile group: 'org.hamcrest', name: 'hamcrest-all', version: '1.3'
+    compile group: 'com.codeborne', name: 'selenide', version: '4.6'
 }
 
 task installZip(dependsOn: ["clean", "packageTests", "installDist"]) << {
     new File("build/work").mkdir()
-    new File('build/zip.sh') << 'cd build/work; zip -r upload.zip .'
+    new File('build/zip.sh') << 'cd build/work; zip -r zip-with-dependencies.zip .'
     copy{
         from "build/install/test/lib/"
         into "build/work/dependency-jars/"
@@ -35,7 +37,7 @@ task installZip(dependsOn: ["clean", "packageTests", "installDist"]) << {
     "chmod 755 build/zip.sh".execute().waitFor()
     "build/zip.sh".execute().waitFor()
     copy{
-        from "build/work/upload.zip"
+        from "build/work/zip-with-dependencies.zip"
         into "build/"
     }
 }
