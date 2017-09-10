@@ -41,7 +41,6 @@ public class SampleTest {
         driver = new RemoteWebDriver(new URL("http://127.0.0.1:4723/wd/hub"),
                 capabilities);
         driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
-        Configuration.browser = driver.getClass().getName();
     }
 
 
