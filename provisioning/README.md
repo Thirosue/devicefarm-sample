@@ -34,7 +34,7 @@ terraform plan -var-file=~/.aws/terraform.tfvars -var 'key_name=[keypair]'
 
 ## AWS IAM User
 
-add aws iam user for devicefarmplagin
+add aws iam user for devicefarmplugin
 
 ### program access
 
