@@ -5,12 +5,12 @@
 + aws access key
 
 ```
-PC537:provisioning hirosue$ cat ~/.aws/terraform.tfvars
+$ cat ~/.aws/terraform.tfvars
 access_key="[IAM Access Key]"
 secret_key="[IAM Secret Key]"
 ```
 
-+ aws key pare
++ aws key pair
 
 ## provisioning
 
@@ -32,6 +32,18 @@ terraform plan -var-file=~/.aws/terraform.tfvars -var 'key_name=[keypair]'
 terraform plan -var-file=~/.aws/terraform.tfvars -var 'key_name=[keypair]'
 ```
 
+## AWS IAM User
+
+add aws iam user for devicefarmplagin
+
+### program access
+
+![IAMSetting1](https://raw.githubusercontent.com/Thirosue/devicefarm-sample/master/provisioning/img/iamsetting1.png "")
+
+### DeviceFarmFullAccess
+
+![IAMSetting2](https://raw.githubusercontent.com/Thirosue/devicefarm-sample/master/provisioning/img/iamsetting2.png "")
+
 ## jenkins 
 
 ### Home
@@ -47,6 +59,17 @@ http://[IPv4 Public IP]:8080
 $ ssh -i "[keypair]" ec2-user@ec2-xx-xxx-xx-xxx.ap-northeast-1.compute.amazonaws.com "sudo su -c 'cat /var/lib/jenkins/secrets/initialAdminPassword'"
 rsynmqjmqqw4pyt8exn2pwfx2agpuzqw
 ```
+
+### add DeviceFarm Plugin
+
+![DeviceFarmPlugin](https://raw.githubusercontent.com/Thirosue/devicefarm-sample/master/provisioning/img/devicefarmplugin.png "")
+
+### Access Key Setting
+
+input DeviceFarm IAM user accesskey & secretkey
+
+![DeviceFarmIAMSetting](https://raw.githubusercontent.com/Thirosue/devicefarm-sample/master/provisioning/img/devicefarmiamsetting.png "")
+
 
 ## Terraform
 
